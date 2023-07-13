@@ -1,0 +1,17 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Password Manager - List of all Accounts
+{% endblock %}
+
+{% block content %}
+    <p>Back to <a href="/">main page</a></p>
+    <h1>Accounts</h1>
+    
+    <ul>
+    {% for x in myaccounts %}
+        <li><a href="details/{{ x.id }}">{{ x.platform }}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

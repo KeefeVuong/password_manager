@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+
+{% block title %}
+Create an Account
+{% endblock %}
+
+{% block content %}
+    <p>Back to <a href="/">main page</a></p>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <form method="POST" class="form-group">
+                {% csrf_token %}
+                <div class="col">
+                    <label for="platform_input">Platform</label>
+                    <input class="form-control" id="platform_input" type="text" name="platform_input"></input>
+                </div>
+                <div class="col">
+                    <label for="username_input">Username</label>
+                    <input class="form-control" id="username_input" type="text" name="username_input"></input>
+                </div>
+                <div class="col">
+                    <label for="password_input">Password</label>
+                    <input class="form-control" id="passwordinput" type="password" name="password_input"></input>
+                </div>
+                
+                <button type="submit" class="btn btn-success">Create</button>
+            </form>
+          </div>
+    </div>
+
+{% endblock %}
