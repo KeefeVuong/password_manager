@@ -6,6 +6,28 @@
 
 {% block content %}
     <p>Back to <a href="/accounts">Accounts</a></p>
-    <h1>Username: {{ myaccount.username }} Password: {{ myaccount.password }}</h1>
+    <h1>
+        {{ myaccount.platform }}
+        <button id="show-password-btn" class="btn btn-danger">Show password</button>
+    </h1>
+    <h2>Username: {{ myaccount.username }}</h2>
+    <h2 id="password-text"></h2>
 
+    <script>
+        passwordBtn = document.getElementById("show-password-btn")
+        passwordBtn.addEventListener("click", function () {
+            if (passwordBtn.innerText === "Show password") {
+                passwordBtn.classList.remove("btn-danger")
+                passwordBtn.classList.add("btn-success")
+                passwordBtn.innerText = "Hide password"
+                document.getElementById("password-text").innerText = `Password: {{ myaccount.password }}`
+            }
+            else {
+                passwordBtn.classList.add("btn-danger")
+                passwordBtn.classList.remove("btn-success")
+                passwordBtn.innerText = "Show password"
+                document.getElementById("password-text").innerText = ``
+            }
+        })
+    </script>
 {% endblock %}

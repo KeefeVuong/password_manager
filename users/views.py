@@ -5,6 +5,9 @@ from .models import Account
 from .forms import RegisterForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from cryptography.fernet import Fernet
+import os
+from dotenv import load_dotenv
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="/login/")
@@ -18,6 +21,7 @@ def accounts(request):
 @login_required(login_url="/login/")
 def details(request, id):
     myaccount = Account.objects.get(id=id)
+    myaccount.password = decrypt_password(myaccount.password)
     context = {
         'myaccount': myaccount,
     }
@@ -31,8 +35,7 @@ def create(request):
     if request.method == "POST":
         platform = request.POST.get("platform_input")
         username = request.POST.get("username_input")
-        password = request.POST.get("password_input")
-        
+        password = encrypt_password(request.POST.get("password_input"))
         account = Account(owner=request.user, platform=platform, username=username, password=password)
         account.save()
 
@@ -52,3 +55,11 @@ def register(request):
         form = RegisterForm()
 
     return render(request, "register.html", {'form': form})
+
+def encrypt_password(password):
+    fernet = Fernet(os.getenv("key"))
+    return fernet.encrypt(password.encode())
+
+def decrypt_password(password):
+    fernet = Fernet(os.getenv("key"))
+    return fernet.decrypt(password).decode()

@@ -2,9 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import rsa
+from cryptography.fernet import Fernet
+from dotenv import load_dotenv
 
 def main():
+    load_dotenv()
+
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'password_manager.settings')
     try:
